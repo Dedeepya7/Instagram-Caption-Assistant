@@ -9,28 +9,50 @@ from datetime import datetime
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# Custom CSS for gradient background (Instagram style: pink to orange)
+# Custom CSS for pastel Instagram-like background and improved readability
 st.markdown("""
     <style>
-        body {
-            font-family: 'Poppins', 'Inter', sans-serif;
-        }
         .stApp {
-            background: linear-gradient(120deg, #fcb045 0%, #fd1d1d 50%, #833ab4 100%) !important;
+            background: linear-gradient(120deg, #fbe7b3 0%, #f7b0b7 50%, #b8a7f7 100%) !important;
         }
-        .main-card {
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 6px 24px 0 rgba(0,0,0,0.07);
-            padding: 2.5rem;
-            margin-top: 2rem;
+        /* Header */
+        .main-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 1.3rem;
+            margin-top: 1.3rem;
         }
+        .main-header-text {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            font-size: 2.7rem;
+            font-weight: 700;
+            color: #202025;
+            letter-spacing: 0.7px;
+            text-shadow: 0 2px 8px #fff7;
+        }
+        /* Subtitle */
+        .subtitle {
+            font-size: 1.18rem;
+            color: #222;
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            text-shadow: 0 1px 10px #fff8;
+        }
+        .privacy {
+            font-size: 1rem;
+            color: #2b2b2b;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 1px 10px #fff3;
+        }
+        /* Inputs and Buttons */
         .stButton button {
             background: #fd1d1d;
             color: white;
             font-weight: 600;
             border-radius: 10px;
-            padding: 0.75rem 2rem;
+            padding: 0.85rem 2.2rem;
+            font-size: 1.15rem;
             transition: background 0.2s;
         }
         .stButton button:hover {
@@ -40,7 +62,7 @@ st.markdown("""
         .stFileUploader {
             border-radius: 12px;
             border: 2px dashed #fd1d1d;
-            background: #f3f4f6;
+            background: #fcf8ff;
         }
         .stCheckbox > label {
             color: #833ab4 !important;
@@ -52,23 +74,39 @@ st.markdown("""
         .stAlert {
             border-radius: 8px;
         }
+        /* Captions block */
+        .caption-block {
+            font-size: 1.23rem !important;
+            color: #232323 !important;
+            font-weight: 500 !important;
+            background: rgba(255,255,255,0.92);
+            border-radius: 14px;
+            padding: 1.2rem 1.3rem;
+            margin: 1.3rem 0;
+            box-shadow: 0 2px 12px #0001;
+        }
+        .stMarkdown ol, .stMarkdown ul {
+            color: #363636 !important;
+        }
+        /* Misc */
+        .stApp > header, .stApp > footer { background: transparent !important; }
     </style>
 """, unsafe_allow_html=True)
 
-# HEADER (Option 1: Logo + light bold title, NO repetition)
+# HEADER (Option 1: Logo + light bold title, larger font)
 st.markdown("""
-<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 1.5rem; margin-top: 1rem;">
+<div class="main-header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-         style="width:48px; height:48px; border-radius:50%; box-shadow:0 4px 12px #0002;">
-    <span style="font-family: 'Poppins', 'Inter', sans-serif; font-size: 2rem; font-weight: 600; color: #fff; letter-spacing: 0.5px; text-shadow: 0 1px 14px #fd1d1d66;">
+         style="width:54px; height:54px; border-radius:50%; box-shadow:0 4px 12px #0002;">
+    <span class="main-header-text">
         Instagram Caption Assistant
     </span>
 </div>
 """, unsafe_allow_html=True)
 
-# Description/instructions - with higher contrast for better visibility
-st.markdown("<p style='font-size:1.1rem; color: #fff; text-shadow: 0 1px 10px #fd1d1d33;'>Upload an image or describe your post to get smart captions in any language!</p>", unsafe_allow_html=True)
-st.markdown("<p style='font-size:1rem; color: #fff; text-shadow: 0 1px 10px #833ab466;'>No data stored. Fully private. ✨</p>", unsafe_allow_html=True)
+# Description/instructions
+st.markdown('<div class="subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
+st.markdown('<div class="privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
@@ -145,7 +183,7 @@ if (images or text_input.strip()) and st.button("Generate Captions"):
         try:
             captions = generate_captions(prompt)
             st.success("🎉 Captions generated!")
-            st.write(captions)
+            st.markdown(f'<div class="caption-block">{captions}</div>', unsafe_allow_html=True)
             st.download_button("📥 Download Captions", captions, file_name=f"captions_{datetime.now().strftime('%Y%m%d_%H%M')}.txt")
         except Exception as e:
             st.error(f"❌ Error: {e}")
