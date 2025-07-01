@@ -8,37 +8,37 @@ from datetime import datetime
 
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-st.markdown("""
-    <style>
-        body {
-            background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Poppins', 'Inter', sans-serif;
-        }
-        .main-card {
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 6px 24px 0 rgba(0,0,0,0.07);
-            padding: 2.5rem;
-            margin-top: 2rem;
-        }
-        .stButton button {
-            background: #6c63ff;
-            color: white;
-            font-weight: 600;
-            border-radius: 10px;
-            padding: 0.75rem 2rem;
-            transition: background 0.2s;
-        }
-        .stButton button:hover {
-            background: #5947c4;
-            color: #fff;
-        }
-        .stFileUploader {
-            border-radius: 12px;
-            border: 2px dashed #6c63ff;
-            background: #f3f4f6;
-        }
-        .stCheckbox > label {
+    st.markdown("""
+        <style>
+            body {
+                background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
+                font-family: 'Poppins', 'Inter', sans-serif;
+            }
+            .main-card {
+                background: #fff;
+                border-radius: 20px;
+                box-shadow: 0 6px 24px 0 rgba(0,0,0,0.07);
+                padding: 2.5rem;
+                margin-top: 2rem;
+            }
+            .stButton button {
+                background: #6c63ff;
+                color: white;
+                font-weight: 600;
+                border-radius: 10px;
+                padding: 0.75rem 2rem;
+                transition: background 0.2s;
+            }
+            .stButton button:hover {
+                background: #5947c4;
+                color: #fff;
+            }
+            .stFileUploader {
+                border-radius: 12px;
+                border: 2px dashed #6c63ff;
+                background: #f3f4f6;
+            }
+            .stCheckbox > label {
             color: #6c63ff !important;
             font-weight: 500;
         }
@@ -51,6 +51,32 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+st.markdown("""
+<div style="
+    display: flex; 
+    align-items: center; 
+    gap: 18px; 
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
+         width="54" 
+         height="54"
+         style="
+            border-radius: 50%; 
+            box-shadow: 0 4px 16px #0002;
+            object-fit: cover;
+            border: 2.5px solid #fff;
+         ">
+    <span style="
+        font-family: 'Poppins', 'Inter', sans-serif; 
+        font-weight: 700;
+        font-size: 2.1rem; 
+        color: #262626;
+        letter-spacing: 0.5px;
+        ">Instagram Caption Assistant</span>
+</div>
+""", unsafe_allow_html=True
+           
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
