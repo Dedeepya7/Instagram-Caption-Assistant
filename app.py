@@ -94,8 +94,6 @@ def generate_captions(prompt):
     response = model.generate_content(prompt)
     return response.text.strip()
 
-# === 🌟 Streamlit UI ===
-st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
 
 st.title("📸 Instagram Caption Assistant")
