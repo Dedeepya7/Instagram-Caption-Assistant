@@ -111,6 +111,9 @@ if uploaded_files:
             images.append(Image.open(f))
         except UnidentifiedImageError:
             st.error(f"File {f.name} is not a valid image and was skipped.")
+# Show image previews
+for img in images:
+    st.image(img, width=120)
 
 text_input = st.text_area("Or describe your post", "")
 
