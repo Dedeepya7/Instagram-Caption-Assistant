@@ -10,10 +10,9 @@ import streamlit.components.v1 as components
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# ---- DREAMY CSS for Instagram gradient and floating logos ----
+# ---- CSS for Instagram gradient and floating logos ----
 st.markdown("""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap');
         .stApp {
             background: linear-gradient(120deg, #f7971e 0%, #fd5c63 40%, #a445b2 100%) !important;
         }
@@ -32,22 +31,30 @@ st.markdown("""
             letter-spacing: 0.7px;
             text-shadow: 0 2px 8px #a445b288, 0 1px 0 #fd5c6388;
         }
-        .dreamy-subtitle {
-            font-family: 'Pacifico', cursive, 'Quicksand', sans-serif;
-            font-size: 1.4rem;
-            color: #fff;
+        /* Subtitle and privacy: same font, but distinct tone */
+        .toned-subtitle {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            font-size: 1.25rem;
             font-weight: 500;
+            color: #fff;
             margin-bottom: 0.3rem;
-            text-shadow: 0 4px 20px #a445b266, 0 1px 0 #fff6, 0 0px 12px #fff2;
-            letter-spacing: 1.2px;
+            letter-spacing: 0.8px;
+            background: linear-gradient(90deg,#fff8,#f7971e99 40%,#fd5c6388 100%);
+            padding: 3px 18px 3px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 18px 0 #a445b233, 0 1px 0 #fff7;
         }
-        .dreamy-privacy {
-            font-family: 'Quicksand', 'Poppins', sans-serif;
-            font-size: 1.1rem;
+        .toned-privacy {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            font-size: 1.08rem;
             color: #fff;
             margin-bottom: 1.5rem;
-            text-shadow: 0 1px 8px #fd5c6344, 0 1px 0 #fff9;
+            font-weight: 400;
             letter-spacing: 0.7px;
+            background: linear-gradient(90deg,#fff6,#a445b299 70%,#fd5c6340 100%);
+            padding: 2px 14px 2px 0;
+            border-radius: 4px;
+            box-shadow: 0 1px 8px #fd5c6344, 0 1px 0 #fff6;
         }
         .stButton button {
             background: #fd5c63;
@@ -148,9 +155,9 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Dreamy subtitle and privacy lines
-st.markdown('<div class="dreamy-subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
-st.markdown('<div class="dreamy-privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
+# Subtitle and privacy lines, same font but with new tone
+st.markdown('<div class="toned-subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
+st.markdown('<div class="toned-privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
