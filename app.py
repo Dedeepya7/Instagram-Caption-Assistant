@@ -5,16 +5,14 @@ from PIL import Image, UnidentifiedImageError
 from transformers import BlipProcessor, BlipForConditionalGeneration
 import google.generativeai as genai
 from datetime import datetime
-import streamlit.components.v1 as components
 
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# ---- DREAMY CSS for Instagram gradient and floating logos ----
+# ---- CSS: dreamy script for subtitle/privacy, NO cursor tracking ----
 st.markdown("""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap');
-        .stApp {
+        body, .stApp {
             background: linear-gradient(120deg, #f7971e 0%, #fd5c63 40%, #a445b2 100%) !important;
         }
         .main-header {
@@ -32,22 +30,38 @@ st.markdown("""
             letter-spacing: 0.7px;
             text-shadow: 0 2px 8px #a445b288, 0 1px 0 #fd5c6388;
         }
-        .dreamy-subtitle {
-            font-family: 'Pacifico', cursive, 'Quicksand', sans-serif;
-            font-size: 1.4rem;
+        /* Dreamy script font for subtitle/privacy lines */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        .dreamy-script {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.1rem;
             color: #fff;
-            font-weight: 500;
-            margin-bottom: 0.3rem;
-            text-shadow: 0 4px 20px #a445b266, 0 1px 0 #fff6, 0 0px 12px #fff2;
-            letter-spacing: 1.2px;
+            display: block;
+            background: none;
+            border-radius: 0;
+            margin-bottom: 0.15rem;
+            margin-top: 1.1rem;
+            box-shadow: none;
+            border: none;
+            outline: none;
+            letter-spacing: 0.8px;
+            filter: brightness(1.09);
+            font-style: normal;
         }
-        .dreamy-privacy {
-            font-family: 'Quicksand', 'Poppins', sans-serif;
-            font-size: 1.1rem;
+        .dreamy-script-privacy {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.35rem;
             color: #fff;
-            margin-bottom: 1.5rem;
-            text-shadow: 0 1px 8px #fd5c6344, 0 1px 0 #fff9;
+            display: block;
+            background: none;
+            border-radius: 0;
+            margin-bottom: 1.13rem;
+            box-shadow: none;
+            border: none;
+            outline: none;
             letter-spacing: 0.7px;
+            filter: brightness(1.08);
+            font-style: normal;
         }
         .stButton button {
             background: #fd5c63;
@@ -90,52 +104,8 @@ st.markdown("""
         .stMarkdown ol, .stMarkdown ul {
             color: #363636 !important;
         }
-        /* ---- Floating Instagram logos ---- */
-        .bg-ig-float {
-            position: fixed;
-            z-index: 0;
-            pointer-events: none;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            overflow: hidden;
-        }
-        .ig-float-img {
-            position: absolute;
-            opacity: 0.13;
-            filter: drop-shadow(0 4px 14px #0004);
-            animation: floatIG 19s linear infinite;
-        }
-        .ig-float-img:nth-child(1) { left: 5vw; top: 82vh; width: 64px; animation-duration: 17s; }
-        .ig-float-img:nth-child(2) { left: 22vw; top: 66vh; width: 44px; animation-duration: 23s; }
-        .ig-float-img:nth-child(3) { left: 70vw; top: 29vh; width: 40px; animation-duration: 19s; }
-        .ig-float-img:nth-child(4) { left: 54vw; top: 75vh; width: 55px; animation-duration: 28s; }
-        .ig-float-img:nth-child(5) { left: 85vw; top: 10vh; width: 50px; animation-duration: 20s; }
-        @keyframes floatIG {
-            0%   { transform: translateY(0) scale(1) rotate(0deg);}
-            100% { transform: translateY(-105vh) scale(1.15) rotate(33deg);}
-        }
-        .stApp > header, .stApp > footer { background: transparent !important; }
     </style>
-    <div class="bg-ig-float">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-    </div>
 """, unsafe_allow_html=True)
-
-# --- Instagram-logo tracking cursor (optional, enabled by default) ---
-components.html("""
-<div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
-</div>
-<script>
-const cursor = document.getElementById('ig-cursor');
-document.addEventListener('mousemove', (e) => {
-  cursor.style.transform = `translate(${e.clientX-22}px, ${e.clientY-22}px)`;
-});
-</script>
-""", height=60)
 
 # HEADER
 st.markdown("""
@@ -148,9 +118,15 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Dreamy subtitle and privacy lines
-st.markdown('<div class="dreamy-subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
-st.markdown('<div class="dreamy-privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
+# Dreamy script, no outline subtitle/privacy lines
+st.markdown("""
+    <div class="dreamy-script">
+        Upload an image or describe your post to get smart captions in any language!
+    </div>
+    <div class="dreamy-script-privacy">
+        No data stored. Fully private. ✨
+    </div>
+""", unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
@@ -191,7 +167,7 @@ language_list = [
 ]
 language_list = sorted(language_list)
 
-# --- PROMPT LOGIC: Improved language & translation handling ---
+# --- PROMPT LOGIC ---
 def build_prompt(desc, n, style, length, emojis, hashtags, language):
     if language.lower() == "english":
         return f"""
@@ -240,7 +216,9 @@ for img in images:
 
 text_input = st.text_area("Or describe your post", "")
 
-n_captions = st.selectbox("Number of Captions", [1, 2, 5, 10])
+# Number input for number of captions: up/down arrows, between 1 and 10
+n_captions = st.number_input("Number of Captions", min_value=1, max_value=10, value=3, step=1)
+
 caption_style = st.selectbox("Caption Style", ["Formal", "Informal", "Humorous", "Inspirational", "Poetic"])
 caption_length = st.selectbox("Caption Length", ["Short", "Medium", "Long"])
 emojis = st.checkbox("Include Emojis 😊", value=True)
