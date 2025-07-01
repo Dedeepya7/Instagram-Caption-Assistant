@@ -52,6 +52,7 @@ def generate_captions(prompt):
 st.set_page_config(page_title="Instagram Caption Generator", layout="centered")
 
 st.title("📸 Instagram Caption Generator")
+st.markdown("🔒 **Your data is safe and never stored.**")  
 st.markdown("Upload image(s) or describe your post to generate smart captions!")
 
 uploaded_files = st.file_uploader("Upload image(s)", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
