@@ -220,7 +220,9 @@ for img in images:
 
 text_input = st.text_area("Or describe your post", "")
 
-n_captions = st.selectbox("Number of Captions", [1, 2, 5, 10])
+# Number input for number of captions: up/down arrows, between 1 and 10
+n_captions = st.number_input("Number of Captions", min_value=1, max_value=10, value=3, step=1)
+
 caption_style = st.selectbox("Caption Style", ["Formal", "Informal", "Humorous", "Inspirational", "Poetic"])
 caption_length = st.selectbox("Caption Length", ["Short", "Medium", "Long"])
 emojis = st.checkbox("Include Emojis 😊", value=True)
