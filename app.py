@@ -9,12 +9,14 @@ from datetime import datetime
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# Custom CSS
+# Custom CSS for gradient background (Instagram style: pink to orange)
 st.markdown("""
     <style>
         body {
-            background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
             font-family: 'Poppins', 'Inter', sans-serif;
+        }
+        .stApp {
+            background: linear-gradient(120deg, #fcb045 0%, #fd1d1d 50%, #833ab4 100%) !important;
         }
         .main-card {
             background: #fff;
@@ -24,7 +26,7 @@ st.markdown("""
             margin-top: 2rem;
         }
         .stButton button {
-            background: #6c63ff;
+            background: #fd1d1d;
             color: white;
             font-weight: 600;
             border-radius: 10px;
@@ -32,16 +34,16 @@ st.markdown("""
             transition: background 0.2s;
         }
         .stButton button:hover {
-            background: #5947c4;
+            background: #833ab4;
             color: #fff;
         }
         .stFileUploader {
             border-radius: 12px;
-            border: 2px dashed #6c63ff;
+            border: 2px dashed #fd1d1d;
             background: #f3f4f6;
         }
         .stCheckbox > label {
-            color: #6c63ff !important;
+            color: #833ab4 !important;
             font-weight: 500;
         }
         .stSelectbox > div {
@@ -53,25 +55,20 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# HEADER (matches your screenshot)
+# HEADER (Option 1: Logo + light bold title, NO repetition)
 st.markdown("""
-<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 0.5rem;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
+<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 1.5rem; margin-top: 1rem;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
          style="width:48px; height:48px; border-radius:50%; box-shadow:0 4px 12px #0002;">
-    <span style="font-family: 'Poppins', 'Inter', sans-serif; font-size: 2rem; font-weight: 600; color: #272833; letter-spacing: 0.5px;">
-        Instagram Caption Assistant
-    </span>
-</div>
-<div style="margin-left: 64px; margin-top: -8px;">
-    <span style="font-family: 'Poppins', 'Inter', sans-serif; font-size: 2rem; font-weight: 800; color: #2c2e35;">
+    <span style="font-family: 'Poppins', 'Inter', sans-serif; font-size: 2rem; font-weight: 600; color: #fff; letter-spacing: 0.5px; text-shadow: 0 1px 14px #fd1d1d66;">
         Instagram Caption Assistant
     </span>
 </div>
 """, unsafe_allow_html=True)
 
-# Description/instructions
-st.markdown("<p style='color: #91c9f7;'>Upload an image or describe your post to get smart captions in any language!</p>", unsafe_allow_html=True)
-st.markdown("<p style='color: #5ef78e;'>No data stored. Fully private. ✨</p>", unsafe_allow_html=True)  
+# Description/instructions - with higher contrast for better visibility
+st.markdown("<p style='font-size:1.1rem; color: #fff; text-shadow: 0 1px 10px #fd1d1d33;'>Upload an image or describe your post to get smart captions in any language!</p>", unsafe_allow_html=True)
+st.markdown("<p style='font-size:1rem; color: #fff; text-shadow: 0 1px 10px #833ab466;'>No data stored. Fully private. ✨</p>", unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
