@@ -208,6 +208,7 @@ def build_prompt(desc, n, style, length, emojis, hashtags, language):
         return f"""
         Generate {n} unique Instagram captions for the following post:
         "{desc}"
+        Each caption should be approximately the same length and level of detail.
         Captions should be {length.lower()} and in a {style.lower()} style.
         {'Include emojis.' if emojis else 'No emojis.'}
         {'Include hashtags.' if hashtags else 'No hashtags.'}
