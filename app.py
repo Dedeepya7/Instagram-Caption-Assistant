@@ -53,7 +53,6 @@ st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
 
 st.title("📸 Instagram Caption Assistant")
-st.markdown("<h1 style='color: #ff4b4b;'>Instagram Caption Assistant 🌍</h1>", unsafe_allow_html=True)
 st.markdown("<p style='color: #91c9f7;'>Upload an image or describe your post to get smart captions in any language!</p>", unsafe_allow_html=True)
 st.markdown("<p style='color: #5ef78e;'>No data stored. Fully private. ✨</p>", unsafe_allow_html=True)  
 # st.markdown("Upload image(s) or describe your post to generate smart captions!")
