@@ -44,16 +44,19 @@ def build_prompt(desc, n, style, length, emojis, hashtags, language):
     """
 
 def generate_captions(prompt):
-    model = genai.GenerativeModel("Gemini 2.5 Flash")
+    model = genai.GenerativeModel("Gemini 1.5 Flash")
     response = model.generate_content(prompt)
     return response.text.strip()
 
 # === 🌟 Streamlit UI ===
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
+
 st.title("📸 Instagram Caption Assistant")
-st.markdown("🔒 **Your data is safe and never stored.**")  
-st.markdown("Upload image(s) or describe your post to generate smart captions!")
+st.markdown("<h1 style='color: #ff4b4b;'>Instagram Caption Assistant 🌍</h1>", unsafe_allow_html=True)
+st.markdown("<p style='color: #91c9f7;'>Upload an image or describe your post to get smart captions in any language!</p>", unsafe_allow_html=True)
+st.markdown("<p style='color: #5ef78e;'>No data stored. Fully private. ✨</p>", unsafe_allow_html=True)  
+# st.markdown("Upload image(s) or describe your post to generate smart captions!")
 
 uploaded_files = st.file_uploader("Upload image(s)", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
 
