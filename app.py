@@ -119,19 +119,6 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# Optionally, uncomment to add a cursor-following Instagram logo
-# components.html("""
-# <div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
-#   <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
-# </div>
-# <script>
-# const cursor = document.getElementById('ig-cursor');
-# document.addEventListener('mousemove', (e) => {
-#   cursor.style.transform = `translate(${e.clientX-22}px, ${e.clientY-22}px)`;
-# });
-# </script>
-# """, height=60)
-
 # HEADER
 st.markdown("""
 <div class="main-header">
@@ -173,16 +160,47 @@ def get_image_description(images, processor, model):
             descriptions.append(f"Could not process image {idx+1}: {e}")
     return " ".join(descriptions)
 
+# --- Language search box list ---
+# This is a list of the world's most spoken and popular languages. Expand as desired.
+language_list = [
+    "English", "Spanish", "French", "German", "Hindi", "Mandarin Chinese", "Arabic", "Bengali",
+    "Russian", "Portuguese", "Indonesian", "Japanese", "Punjabi", "Marathi", "Telugu", "Turkish",
+    "Tamil", "Vietnamese", "Korean", "Italian", "Gujarati", "Persian", "Polish", "Ukrainian",
+    "Dutch", "Romanian", "Greek", "Malayalam", "Kannada", "Czech", "Hungarian", "Thai", "Hebrew",
+    "Swedish", "Finnish", "Danish", "Norwegian", "Slovak", "Bulgarian", "Serbian", "Croatian", "Sinhala",
+    "Filipino", "Malay", "Swahili", "Afrikaans", "Irish", "Scottish Gaelic", "Catalan", "Basque", "Galician",
+    "Estonian", "Latvian", "Lithuanian", "Slovenian", "Icelandic", "Albanian", "Macedonian", "Belarusian",
+    "Armenian", "Georgian", "Azerbaijani", "Uzbek", "Kazakh",
+]
+
+# Sort alphabetically for better search experience
+language_list = sorted(language_list)
+
+# --- PROMPT LOGIC: Improved language & translation handling ---
 def build_prompt(desc, n, style, length, emojis, hashtags, language):
-    return f"""
-    Generate {n} {style.lower()} Instagram captions for the post:
-    "{desc}"
-    Captions should be {length.lower()}.
-    {'Include emojis.' if emojis else 'No emojis.'}
-    {'Include hashtags.' if hashtags else 'No hashtags.'}
-    Translate the captions to {language}.
-    Format the captions as a numbered list.
-    """
+    if language.lower() == "english":
+        return f"""
+        Generate {n} unique Instagram captions in English ONLY for the following post:
+        "{desc}"
+        Captions should be {length.lower()} and in a {style.lower()} style.
+        {'Include emojis.' if emojis else 'No emojis.'}
+        {'Include hashtags.' if hashtags else 'No hashtags.'}
+        Do NOT provide translations or captions in any other language.
+        List the captions as a numbered list, with no extra explanations or formatting.
+        """
+    else:
+        return f"""
+        Generate {n} unique Instagram captions for the following post:
+        "{desc}"
+        Captions should be {length.lower()} and in a {style.lower()} style.
+        {'Include emojis.' if emojis else 'No emojis.'}
+        {'Include hashtags.' if hashtags else 'No hashtags.'}
+        The captions should be in {language}.
+        For each caption, also provide a translation in English, formatted as:
+        [Caption in {language}]
+        English: [English translation]
+        List the captions as a numbered list, with no extra explanations or formatting.
+        """
 
 def generate_captions(prompt):
     model = genai.GenerativeModel("gemini-1.5-flash-latest")
@@ -199,7 +217,7 @@ if uploaded_files:
     for f in uploaded_files:
         try:
             images.append(Image.open(f))
-        except (UnrecognizedImageError, UnidentifiedImageError):
+        except UnidentifiedImageError:
             st.error(f"File {f.name} is not a valid image and was skipped.")
 
 for img in images:
@@ -212,7 +230,7 @@ caption_style = st.selectbox("Caption Style", ["Formal", "Informal", "Humorous",
 caption_length = st.selectbox("Caption Length", ["Short", "Medium", "Long"])
 emojis = st.checkbox("Include Emojis 😊", value=True)
 hashtags = st.checkbox("Include Hashtags #️⃣", value=True)
-language = st.selectbox("Output Language", ["English", "Hindi", "Telugu", "Tamil", "Kannada", "French"])
+language = st.selectbox("Search or select your output language", language_list, index=language_list.index("English"))
 
 if (images or text_input.strip()) and st.button("Generate Captions"):
     with st.spinner("Generating captions..."):
