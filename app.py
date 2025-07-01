@@ -124,18 +124,18 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# --- Instagram-logo tracking cursor (optional, enabled by default) ---
-components.html("""
-<div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
-</div>
-<script>
-const cursor = document.getElementById('ig-cursor');
-document.addEventListener('mousemove', (e) => {
-  cursor.style.transform = `translate(${e.clientX-22}px, ${e.clientY-22}px)`;
-});
-</script>
-""", height=60)
+# # --- Instagram-logo tracking cursor (optional, enabled by default) ---
+# components.html("""
+# <div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
+#   <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
+# </div>
+# <script>
+# const cursor = document.getElementById('ig-cursor');
+# document.addEventListener('mousemove', (e) => {
+#   cursor.style.transform = `translate(${e.clientX-22}px, ${e.clientY-22}px)`;
+# });
+# </script>
+# """, height=60)
 
 # HEADER
 st.markdown("""
@@ -150,7 +150,7 @@ st.markdown("""
 
 # Dreamy subtitle and privacy lines
 st.markdown('<div class="dreamy-subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
-st.markdown('<div class="dreamy-privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
+st.markdown('<div class="dreamy-subtitle">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
