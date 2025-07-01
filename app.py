@@ -1,21 +1,21 @@
 import os
 import torch
 import streamlit as st
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, UnrecognizedImageError, UnidentifiedImageError
 from transformers import BlipProcessor, BlipForConditionalGeneration
 import google.generativeai as genai
 from datetime import datetime
+import streamlit.components.v1 as components
 
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# Custom CSS for pastel Instagram-like background and improved readability
+# ---- CSS for Instagram gradient and floating logos ----
 st.markdown("""
     <style>
         .stApp {
-            background: linear-gradient(120deg, #fbe7b3 0%, #f7b0b7 50%, #b8a7f7 100%) !important;
+            background: linear-gradient(120deg, #f7971e 0%, #fd5c63 40%, #a445b2 100%) !important;
         }
-        /* Header */
         .main-header {
             display: flex;
             align-items: center;
@@ -27,27 +27,25 @@ st.markdown("""
             font-family: 'Poppins', 'Inter', sans-serif;
             font-size: 2.7rem;
             font-weight: 700;
-            color: #202025;
+            color: #fff;
             letter-spacing: 0.7px;
-            text-shadow: 0 2px 8px #fff7;
+            text-shadow: 0 2px 8px #a445b288, 0 1px 0 #fd5c6388;
         }
-        /* Subtitle */
         .subtitle {
             font-size: 1.18rem;
-            color: #222;
+            color: #fff;
             font-weight: 500;
             margin-bottom: 0.2rem;
-            text-shadow: 0 1px 10px #fff8;
+            text-shadow: 0 1px 10px #a445b266;
         }
         .privacy {
             font-size: 1rem;
-            color: #2b2b2b;
+            color: #fff;
             margin-bottom: 1.5rem;
-            text-shadow: 0 1px 10px #fff3;
+            text-shadow: 0 1px 6px #fd5c6344;
         }
-        /* Inputs and Buttons */
         .stButton button {
-            background: #fd1d1d;
+            background: #fd5c63;
             color: white;
             font-weight: 600;
             border-radius: 10px;
@@ -56,16 +54,16 @@ st.markdown("""
             transition: background 0.2s;
         }
         .stButton button:hover {
-            background: #833ab4;
+            background: #a445b2;
             color: #fff;
         }
         .stFileUploader {
             border-radius: 12px;
-            border: 2px dashed #fd1d1d;
-            background: #fcf8ff;
+            border: 2px dashed #fd5c63;
+            background: #fff9fb;
         }
         .stCheckbox > label {
-            color: #833ab4 !important;
+            color: #a445b2 !important;
             font-weight: 500;
         }
         .stSelectbox > div {
@@ -74,12 +72,11 @@ st.markdown("""
         .stAlert {
             border-radius: 8px;
         }
-        /* Captions block */
         .caption-block {
             font-size: 1.23rem !important;
             color: #232323 !important;
             font-weight: 500 !important;
-            background: rgba(255,255,255,0.92);
+            background: rgba(255,255,255,0.97);
             border-radius: 14px;
             padding: 1.2rem 1.3rem;
             margin: 1.3rem 0;
@@ -88,12 +85,54 @@ st.markdown("""
         .stMarkdown ol, .stMarkdown ul {
             color: #363636 !important;
         }
-        /* Misc */
+        /* ---- Floating Instagram logos ---- */
+        .bg-ig-float {
+            position: fixed;
+            z-index: 0;
+            pointer-events: none;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            overflow: hidden;
+        }
+        .ig-float-img {
+            position: absolute;
+            opacity: 0.13;
+            filter: drop-shadow(0 4px 14px #0004);
+            animation: floatIG 19s linear infinite;
+        }
+        .ig-float-img:nth-child(1) { left: 5vw; top: 82vh; width: 64px; animation-duration: 17s; }
+        .ig-float-img:nth-child(2) { left: 22vw; top: 66vh; width: 44px; animation-duration: 23s; }
+        .ig-float-img:nth-child(3) { left: 70vw; top: 29vh; width: 40px; animation-duration: 19s; }
+        .ig-float-img:nth-child(4) { left: 54vw; top: 75vh; width: 55px; animation-duration: 28s; }
+        .ig-float-img:nth-child(5) { left: 85vw; top: 10vh; width: 50px; animation-duration: 20s; }
+        @keyframes floatIG {
+            0%   { transform: translateY(0) scale(1) rotate(0deg);}
+            100% { transform: translateY(-105vh) scale(1.15) rotate(33deg);}
+        }
         .stApp > header, .stApp > footer { background: transparent !important; }
     </style>
+    <div class="bg-ig-float">
+      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+    </div>
 """, unsafe_allow_html=True)
 
-# HEADER (Option 1: Logo + light bold title, larger font)
+# Optionally, uncomment to add a cursor-following Instagram logo
+# components.html("""
+# <div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
+#   <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
+# </div>
+# <script>
+# const cursor = document.getElementById('ig-cursor');
+# document.addEventListener('mousemove', (e) => {
+#   cursor.style.transform = `translate(${e.clientX-22}px, ${e.clientY-22}px)`;
+# });
+# </script>
+# """, height=60)
+
+# HEADER
 st.markdown("""
 <div class="main-header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
@@ -160,7 +199,7 @@ if uploaded_files:
     for f in uploaded_files:
         try:
             images.append(Image.open(f))
-        except UnidentifiedImageError:
+        except (UnrecognizedImageError, UnidentifiedImageError):
             st.error(f"File {f.name} is not a valid image and was skipped.")
 
 for img in images:
