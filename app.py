@@ -6,6 +6,50 @@ from transformers import BlipProcessor, BlipForConditionalGeneration
 import google.generativeai as genai
 from datetime import datetime
 
+st.markdown("""
+    <style>
+        body {
+            background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
+            font-family: 'Poppins', 'Inter', sans-serif;
+        }
+        .main-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 6px 24px 0 rgba(0,0,0,0.07);
+            padding: 2.5rem;
+            margin-top: 2rem;
+        }
+        .stButton button {
+            background: #6c63ff;
+            color: white;
+            font-weight: 600;
+            border-radius: 10px;
+            padding: 0.75rem 2rem;
+            transition: background 0.2s;
+        }
+        .stButton button:hover {
+            background: #5947c4;
+            color: #fff;
+        }
+        .stFileUploader {
+            border-radius: 12px;
+            border: 2px dashed #6c63ff;
+            background: #f3f4f6;
+        }
+        .stCheckbox > label {
+            color: #6c63ff !important;
+            font-weight: 500;
+        }
+        .stSelectbox > div {
+            border-radius: 8px;
+        }
+        .stAlert {
+            border-radius: 8px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
     st.warning("Please add your Gemini API key to .streamlit/secrets.toml as GEMINI_API_KEY.")
