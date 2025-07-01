@@ -6,6 +6,8 @@ from transformers import BlipProcessor, BlipForConditionalGeneration
 import google.generativeai as genai
 from datetime import datetime
 
+st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
+
 st.markdown("""
     <style>
         body {
