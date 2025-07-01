@@ -49,9 +49,9 @@ def generate_captions(prompt):
     return response.text.strip()
 
 # === 🌟 Streamlit UI ===
-st.set_page_config(page_title="Instagram Caption Generator", layout="centered")
+st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-st.title("📸 Instagram Caption Generator")
+st.title("📸 Instagram Caption Assistant")
 st.markdown("🔒 **Your data is safe and never stored.**")  
 st.markdown("Upload image(s) or describe your post to generate smart captions!")
 
