@@ -6,7 +6,10 @@ from transformers import BlipProcessor, BlipForConditionalGeneration
 import google.generativeai as genai
 from datetime import datetime
 
+# Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
+
+# Custom CSS
 st.markdown("""
     <style>
         body {
@@ -50,33 +53,25 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Stylish header with circular Instagram logo and title
+# HEADER (matches your screenshot)
 st.markdown("""
-<div style="
-    display: flex; 
-    align-items: center; 
-    gap: 18px; 
-    margin-bottom: 1.5rem;
-    margin-top: 1rem;">
+<div style="display: flex; align-items: center; gap: 16px; margin-bottom: 0.5rem;">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" 
-         width="54" 
-         height="54"
-         style="
-            border-radius: 50%; 
-            box-shadow: 0 4px 16px #0002;
-            object-fit: cover;
-            border: 2.5px solid #fff;
-         ">
-    <span style="
-        font-family: 'Poppins', 'Inter', sans-serif; 
-        font-weight: 700;
-        font-size: 2.1rem; 
-        color: #262626;
-        letter-spacing: 0.5px;
-        ">Instagram Caption Assistant</span>
+         style="width:48px; height:48px; border-radius:50%; box-shadow:0 4px 12px #0002;">
+    <span style="font-family: 'Poppins', 'Inter', sans-serif; font-size: 2rem; font-weight: 600; color: #272833; letter-spacing: 0.5px;">
+        Instagram Caption Assistant
+    </span>
+</div>
+<div style="margin-left: 64px; margin-top: -8px;">
+    <span style="font-family: 'Poppins', 'Inter', sans-serif; font-size: 2rem; font-weight: 800; color: #2c2e35;">
+        Instagram Caption Assistant
+    </span>
 </div>
 """, unsafe_allow_html=True)
-           
+
+# Description/instructions
+st.markdown("<p style='color: #91c9f7;'>Upload an image or describe your post to get smart captions in any language!</p>", unsafe_allow_html=True)
+st.markdown("<p style='color: #5ef78e;'>No data stored. Fully private. ✨</p>", unsafe_allow_html=True)  
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
@@ -120,32 +115,11 @@ def generate_captions(prompt):
     response = model.generate_content(prompt)
     return response.text.strip()
 
-
-
-# st.title("📸 Instagram Caption Assistant")
-# st.markdown("""
-# <div style="display: flex; align-items: center;">
-#     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="40" style="margin-right:10px;">
-#     <h1 style="margin:0;">Instagram Caption Assistant</h1>
-# </div>
-# """, unsafe_allow_html=True)
-
-st.markdown("""
-<div style="display:flex; align-items:center; gap:16px;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
-       width="48"
-       style="border-radius:50%; box-shadow:0 2px 8px #0001;">
-  <h1 style="margin:0; font-size:2.5rem;">Instagram Caption Assistant</h1>
-</div>
-""", unsafe_allow_html=True)
-
-st.markdown("<p style='color: #91c9f7;'>Upload an image or describe your post to get smart captions in any language!</p>", unsafe_allow_html=True)
-st.markdown("<p style='color: #5ef78e;'>No data stored. Fully private. ✨</p>", unsafe_allow_html=True)  
-# st.markdown("Upload image(s) or describe your post to generate smart captions!")
+# --- UI ---
 
 uploaded_files = st.file_uploader("Upload image(s)", type=["jpg", "jpeg", "png"], accept_multiple_files=True)
 
-# Robust image loading with error handling
+# Robust image loading with error handling and preview
 images = []
 if uploaded_files:
     for f in uploaded_files:
@@ -153,7 +127,7 @@ if uploaded_files:
             images.append(Image.open(f))
         except UnidentifiedImageError:
             st.error(f"File {f.name} is not a valid image and was skipped.")
-# Show image previews
+
 for img in images:
     st.image(img, width=120)
 
