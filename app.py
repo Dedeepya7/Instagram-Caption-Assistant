@@ -2,6 +2,7 @@ import os
 import torch
 import streamlit as st
 from PIL import Image
+import trasnformers
 from transformers import BlipProcessor, BlipForConditionalGeneration
 #import torch
 import google.generativeai as genai
