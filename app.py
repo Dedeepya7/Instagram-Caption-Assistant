@@ -1,7 +1,7 @@
 import os
 import torch
 import streamlit as st
-from PIL import Image, UnrecognizedImageError, UnidentifiedImageError
+from PIL import Image, UnidentifiedImageError
 from transformers import BlipProcessor, BlipForConditionalGeneration
 import google.generativeai as genai
 from datetime import datetime
