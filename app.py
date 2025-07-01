@@ -10,9 +10,16 @@ import streamlit.components.v1 as components
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# ---- CSS for Instagram gradient and floating logos ----
+# ---- CSS and Instagram Sans (unofficial CDN) ----
 st.markdown("""
     <style>
+        @font-face {
+            font-family: 'Instagram Sans';
+            src: url('https://cdn.jsdelivr.net/gh/Instagram/Instagram-Sans-Fonts/web/InstagramSans-Regular.woff2') format('woff2'),
+                 url('https://cdn.jsdelivr.net/gh/Instagram/Instagram-Sans-Fonts/web/InstagramSans-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
         .stApp {
             background: linear-gradient(120deg, #f7971e 0%, #fd5c63 40%, #a445b2 100%) !important;
         }
@@ -31,29 +38,28 @@ st.markdown("""
             letter-spacing: 0.7px;
             text-shadow: 0 2px 8px #a445b288, 0 1px 0 #fd5c6388;
         }
-        /* Subtitle and privacy: same font, but distinct tone */
-        .toned-subtitle {
-            font-family: 'Poppins', 'Inter', sans-serif;
-            font-size: 1.25rem;
+        .ig-sans-subtitle {
+            font-family: 'Instagram Sans', 'Poppins', 'Inter', sans-serif;
+            font-size: 1.28rem;
             font-weight: 500;
             color: #fff;
             margin-bottom: 0.3rem;
-            letter-spacing: 0.8px;
+            letter-spacing: 1px;
             background: linear-gradient(90deg,#fff8,#f7971e99 40%,#fd5c6388 100%);
-            padding: 3px 18px 3px 0;
-            border-radius: 4px;
+            padding: 5px 20px 5px 0;
+            border-radius: 6px;
             box-shadow: 0 1px 18px 0 #a445b233, 0 1px 0 #fff7;
         }
-        .toned-privacy {
-            font-family: 'Poppins', 'Inter', sans-serif;
-            font-size: 1.08rem;
+        .ig-sans-privacy {
+            font-family: 'Instagram Sans', 'Poppins', 'Inter', sans-serif;
+            font-size: 1.07rem;
             color: #fff;
             margin-bottom: 1.5rem;
             font-weight: 400;
-            letter-spacing: 0.7px;
+            letter-spacing: 0.8px;
             background: linear-gradient(90deg,#fff6,#a445b299 70%,#fd5c6340 100%);
-            padding: 2px 14px 2px 0;
-            border-radius: 4px;
+            padding: 3px 14px 3px 0;
+            border-radius: 6px;
             box-shadow: 0 1px 8px #fd5c6344, 0 1px 0 #fff6;
         }
         .stButton button {
@@ -131,7 +137,7 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-# --- Instagram-logo tracking cursor (optional, enabled by default) ---
+# --- Instagram-logo tracking cursor ---
 components.html("""
 <div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
   <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
@@ -155,9 +161,9 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Subtitle and privacy lines, same font but with new tone
-st.markdown('<div class="toned-subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
-st.markdown('<div class="toned-privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
+# Instagram Sans subtitle and privacy lines
+st.markdown('<div class="ig-sans-subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
+st.markdown('<div class="ig-sans-privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
