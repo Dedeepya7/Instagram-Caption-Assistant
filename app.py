@@ -5,21 +5,13 @@ from PIL import Image, UnidentifiedImageError
 from transformers import BlipProcessor, BlipForConditionalGeneration
 import google.generativeai as genai
 from datetime import datetime
-import streamlit.components.v1 as components
 
-#Page config
+# Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# ---- CSS and Instagram Sans (unofficial CDN) ----
+# ---- CSS: dreamy background, small subtitle/privacy, no outlines, no special fonts, no tracky cursor ----
 st.markdown("""
     <style>
-        @font-face {
-            font-family: 'Instagram Sans';
-            src: url('https://cdn.jsdelivr.net/gh/Instagram/Instagram-Sans-Fonts/web/InstagramSans-Regular.woff2') format('woff2'),
-                 url('https://cdn.jsdelivr.net/gh/Instagram/Instagram-Sans-Fonts/web/InstagramSans-Regular.woff') format('woff');
-            font-weight: 400;
-            font-style: normal;
-        }
         body, .stApp {
             background: linear-gradient(120deg, #f7971e 0%, #fd5c63 40%, #a445b2 100%) !important;
         }
@@ -38,29 +30,43 @@ st.markdown("""
             letter-spacing: 0.7px;
             text-shadow: 0 2px 8px #a445b288, 0 1px 0 #fd5c6388;
         }
-        .ig-sans-subtitle {
-            font-family: 'Instagram Sans', 'Poppins', 'Inter', sans-serif;
-            font-size: 1.28rem;
-            font-weight: 500;
-            color: #fff;
-            margin-bottom: 0.3rem;
-            letter-spacing: 1px;
-            background: linear-gradient(90deg,#fff8,#f7971e99 40%,#fd5c6388 100%);
-            padding: 5px 20px 5px 0;
-            border-radius: 6px;
-            box-shadow: 0 1px 18px 0 #a445b233, 0 1px 0 #fff7;
-        }
-        .ig-sans-privacy {
-            font-family: 'Instagram Sans', 'Poppins', 'Inter', sans-serif;
-            font-size: 1.07rem;
-            color: #fff;
-            margin-bottom: 1.5rem;
+        /* Dreamy, small, no outline subtitle/privacy lines */
+        .dreamy-subtitle {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            font-size: 1.03rem;
             font-weight: 400;
-            letter-spacing: 0.8px;
-            background: linear-gradient(90deg,#fff6,#a445b299 70%,#fd5c6340 100%);
-            padding: 3px 14px 3px 0;
-            border-radius: 6px;
-            box-shadow: 0 1px 8px #fd5c6344, 0 1px 0 #fff6;
+            display: block;
+            color: #fff;
+            letter-spacing: 0.7px;
+            background: linear-gradient(90deg,#fff7,#f7971e99 40%,#fd5c6388 100%);
+            padding: 7px 20px 7px 12px;
+            border-radius: 9px;
+            margin-bottom: 0.18rem;
+            margin-top: 1.1rem;
+            box-shadow: none;
+            border: none;
+            outline: none;
+            filter: blur(0.1px) drop-shadow(0 2px 12px #fff4) brightness(1.10);
+            opacity: 0.97;
+            font-style: italic;
+        }
+        .dreamy-privacy {
+            font-family: 'Poppins', 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 400;
+            display: block;
+            color: #fff;
+            letter-spacing: 0.7px;
+            background: linear-gradient(90deg,#fff4,#a445b299 70%,#fd5c6340 100%);
+            padding: 6px 16px 6px 10px;
+            border-radius: 9px;
+            margin-bottom: 1.1rem;
+            box-shadow: none;
+            border: none;
+            outline: none;
+            filter: blur(0.1px) drop-shadow(0 1px 7px #fff3) brightness(1.10);
+            opacity: 0.96;
+            font-style: italic;
         }
         .stButton button {
             background: #fd5c63;
@@ -103,54 +109,10 @@ st.markdown("""
         .stMarkdown ol, .stMarkdown ul {
             color: #363636 !important;
         }
-        /* ---- Floating Instagram logos ---- */
-        .bg-ig-float {
-            position: fixed;
-            z-index: 0;
-            pointer-events: none;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            overflow: hidden;
-        }
-        .ig-float-img {
-            position: absolute;
-            opacity: 0.13;
-            filter: drop-shadow(0 4px 14px #0004);
-            animation: floatIG 19s linear infinite;
-        }
-        .ig-float-img:nth-child(1) { left: 5vw; top: 82vh; width: 64px; animation-duration: 17s; }
-        .ig-float-img:nth-child(2) { left: 22vw; top: 66vh; width: 44px; animation-duration: 23s; }
-        .ig-float-img:nth-child(3) { left: 70vw; top: 29vh; width: 40px; animation-duration: 19s; }
-        .ig-float-img:nth-child(4) { left: 54vw; top: 75vh; width: 55px; animation-duration: 28s; }
-        .ig-float-img:nth-child(5) { left: 85vw; top: 10vh; width: 50px; animation-duration: 20s; }
-        @keyframes floatIG {
-            0%   { transform: translateY(0) scale(1) rotate(0deg);}
-            100% { transform: translateY(-105vh) scale(1.15) rotate(33deg);}
-        }
-        .stApp > header, .stApp > footer { background: transparent !important; }
     </style>
-    <div class="bg-ig-float">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-      <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
-    </div>
 """, unsafe_allow_html=True)
 
-# --- Instagram-logo tracking cursor ---
-components.html("""
-<div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
-</div>
-<script>
-const cursor = document.getElementById('ig-cursor');
-document.addEventListener('mousemove', (e) => {
-  cursor.style.transform = `translate(${e.clientX-22}px, ${e.clientY-22}px)`;
-});
-</script>
-""", height=60)
-
-# HEADER
+# HEADER (no cursor, no special font)
 st.markdown("""
 <div class="main-header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
@@ -161,9 +123,17 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Instagram Sans subtitle and privacy lines
-st.markdown('<div class="ig-sans-subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
-st.markdown('<div class="ig-sans-privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
+# Dreamy, small, no outline subtitle/privacy lines
+st.markdown("""
+    <small>
+        <div class="dreamy-subtitle">
+            Upload an image or describe your post to get smart captions in any language!
+        </div>
+        <div class="dreamy-privacy">
+            No data stored. Fully private. ✨
+        </div>
+    </small>
+""", unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
