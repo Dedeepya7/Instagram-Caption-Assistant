@@ -1,8 +1,9 @@
-
+import os
+import torch
 import streamlit as st
 from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration
-import torch
+#import torch
 import google.generativeai as genai
 from datetime import datetime
 
