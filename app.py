@@ -97,12 +97,22 @@ def generate_captions(prompt):
 
 
 # st.title("📸 Instagram Caption Assistant")
+# st.markdown("""
+# <div style="display: flex; align-items: center;">
+#     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="40" style="margin-right:10px;">
+#     <h1 style="margin:0;">Instagram Caption Assistant</h1>
+# </div>
+# """, unsafe_allow_html=True)
+
 st.markdown("""
-<div style="display: flex; align-items: center;">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" width="40" style="margin-right:10px;">
-    <h1 style="margin:0;">Instagram Caption Assistant</h1>
+<div style="display:flex; align-items:center; gap:16px;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
+       width="48"
+       style="border-radius:50%; box-shadow:0 2px 8px #0001;">
+  <h1 style="margin:0; font-size:2.5rem;">Instagram Caption Assistant</h1>
 </div>
 """, unsafe_allow_html=True)
+
 st.markdown("<p style='color: #91c9f7;'>Upload an image or describe your post to get smart captions in any language!</p>", unsafe_allow_html=True)
 st.markdown("<p style='color: #5ef78e;'>No data stored. Fully private. ✨</p>", unsafe_allow_html=True)  
 # st.markdown("Upload image(s) or describe your post to generate smart captions!")
