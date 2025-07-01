@@ -1,0 +1,14 @@
+# streamlit
+# transformers
+# langchain
+# openai
+# langcodes
+# Pillow
+# torch
+
+streamlit
+transformers
+Pillow
+langchain
+langchain-community
+huggingface_hub
