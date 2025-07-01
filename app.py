@@ -7,7 +7,7 @@ import google.generativeai as genai
 from datetime import datetime
 import streamlit.components.v1 as components
 
-# Page config
+#Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
 # ---- CSS and Instagram Sans (unofficial CDN) ----
@@ -20,7 +20,7 @@ st.markdown("""
             font-weight: 400;
             font-style: normal;
         }
-        .stApp {
+        body, .stApp {
             background: linear-gradient(120deg, #f7971e 0%, #fd5c63 40%, #a445b2 100%) !important;
         }
         .main-header {
