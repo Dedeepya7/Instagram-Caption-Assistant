@@ -44,7 +44,7 @@ def build_prompt(desc, n, style, length, emojis, hashtags, language):
     """
 
 def generate_captions(prompt):
-    model = genai.GenerativeModel("Gemini 1.5 Flash")
+    model = genai.GenerativeModel("gemini-1.5-flash-latest")
     response = model.generate_content(prompt)
     return response.text.strip()
 
