@@ -10,9 +10,10 @@ import streamlit.components.v1 as components
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# ---- CSS for Instagram gradient and floating logos ----
+# ---- DREAMY CSS for Instagram gradient and floating logos ----
 st.markdown("""
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;700&display=swap');
         .stApp {
             background: linear-gradient(120deg, #f7971e 0%, #fd5c63 40%, #a445b2 100%) !important;
         }
@@ -31,18 +32,22 @@ st.markdown("""
             letter-spacing: 0.7px;
             text-shadow: 0 2px 8px #a445b288, 0 1px 0 #fd5c6388;
         }
-        .subtitle {
-            font-size: 1.18rem;
+        .dreamy-subtitle {
+            font-family: 'Pacifico', cursive, 'Quicksand', sans-serif;
+            font-size: 1.4rem;
             color: #fff;
             font-weight: 500;
-            margin-bottom: 0.2rem;
-            text-shadow: 0 1px 10px #a445b266;
+            margin-bottom: 0.3rem;
+            text-shadow: 0 4px 20px #a445b266, 0 1px 0 #fff6, 0 0px 12px #fff2;
+            letter-spacing: 1.2px;
         }
-        .privacy {
-            font-size: 1rem;
+        .dreamy-privacy {
+            font-family: 'Quicksand', 'Poppins', sans-serif;
+            font-size: 1.1rem;
             color: #fff;
             margin-bottom: 1.5rem;
-            text-shadow: 0 1px 6px #fd5c6344;
+            text-shadow: 0 1px 8px #fd5c6344, 0 1px 0 #fff9;
+            letter-spacing: 0.7px;
         }
         .stButton button {
             background: #fd5c63;
@@ -119,6 +124,19 @@ st.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
+# --- Instagram-logo tracking cursor (optional, enabled by default) ---
+components.html("""
+<div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
+</div>
+<script>
+const cursor = document.getElementById('ig-cursor');
+document.addEventListener('mousemove', (e) => {
+  cursor.style.transform = `translate(${e.clientX-22}px, ${e.clientY-22}px)`;
+});
+</script>
+""", height=60)
+
 # HEADER
 st.markdown("""
 <div class="main-header">
@@ -130,9 +148,9 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Description/instructions
-st.markdown('<div class="subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
-st.markdown('<div class="privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
+# Dreamy subtitle and privacy lines
+st.markdown('<div class="dreamy-subtitle">Upload an image or describe your post to get smart captions in any language!</div>', unsafe_allow_html=True)
+st.markdown('<div class="dreamy-privacy">No data stored. Fully private. ✨</div>', unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
 if "GEMINI_API_KEY" not in st.secrets:
@@ -161,7 +179,6 @@ def get_image_description(images, processor, model):
     return " ".join(descriptions)
 
 # --- Language search box list ---
-# This is a list of the world's most spoken and popular languages. Expand as desired.
 language_list = [
     "English", "Spanish", "French", "German", "Hindi", "Mandarin Chinese", "Arabic", "Bengali",
     "Russian", "Portuguese", "Indonesian", "Japanese", "Punjabi", "Marathi", "Telugu", "Turkish",
@@ -172,8 +189,6 @@ language_list = [
     "Estonian", "Latvian", "Lithuanian", "Slovenian", "Icelandic", "Albanian", "Macedonian", "Belarusian",
     "Armenian", "Georgian", "Azerbaijani", "Uzbek", "Kazakh",
 ]
-
-# Sort alphabetically for better search experience
 language_list = sorted(language_list)
 
 # --- PROMPT LOGIC: Improved language & translation handling ---
