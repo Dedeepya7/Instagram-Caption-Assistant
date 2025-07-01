@@ -9,7 +9,7 @@ from datetime import datetime
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# ---- CSS: dreamy background, small subtitle/privacy, no outlines, no special fonts, no tracky cursor ----
+# ---- CSS: dreamy cursive subtitle/privacy, no outlines, no colored borders, no tracky cursor ----
 st.markdown("""
     <style>
         body, .stApp {
@@ -30,43 +30,42 @@ st.markdown("""
             letter-spacing: 0.7px;
             text-shadow: 0 2px 8px #a445b288, 0 1px 0 #fd5c6388;
         }
-        /* Dreamy, small, no outline subtitle/privacy lines */
-        .dreamy-subtitle {
-            font-family: 'Poppins', 'Inter', sans-serif;
-            font-size: 1.03rem;
+        /* Dreamy cursive, small, no outline subtitle/privacy lines */
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        .dreamy-cursive {
+            font-family: 'Pacifico', cursive, 'Poppins', 'Inter', sans-serif;
+            font-size: 1.09rem;
             font-weight: 400;
             display: block;
             color: #fff;
-            letter-spacing: 0.7px;
-            background: linear-gradient(90deg,#fff7,#f7971e99 40%,#fd5c6388 100%);
-            padding: 7px 20px 7px 12px;
-            border-radius: 9px;
-            margin-bottom: 0.18rem;
+            background: none;
+            border-radius: 0;
+            margin-bottom: 0.07rem;
             margin-top: 1.1rem;
             box-shadow: none;
             border: none;
             outline: none;
-            filter: blur(0.1px) drop-shadow(0 2px 12px #fff4) brightness(1.10);
+            filter: drop-shadow(0 2px 10px #fff3) brightness(1.07);
             opacity: 0.97;
             font-style: italic;
+            letter-spacing: 0.8px;
         }
-        .dreamy-privacy {
-            font-family: 'Poppins', 'Inter', sans-serif;
-            font-size: 0.95rem;
+        .dreamy-cursive-privacy {
+            font-family: 'Pacifico', cursive, 'Poppins', 'Inter', sans-serif;
+            font-size: 0.97rem;
             font-weight: 400;
             display: block;
             color: #fff;
-            letter-spacing: 0.7px;
-            background: linear-gradient(90deg,#fff4,#a445b299 70%,#fd5c6340 100%);
-            padding: 6px 16px 6px 10px;
-            border-radius: 9px;
-            margin-bottom: 1.1rem;
+            background: none;
+            border-radius: 0;
+            margin-bottom: 1.13rem;
             box-shadow: none;
             border: none;
             outline: none;
-            filter: blur(0.1px) drop-shadow(0 1px 7px #fff3) brightness(1.10);
+            filter: drop-shadow(0 1px 7px #fff3) brightness(1.07);
             opacity: 0.96;
             font-style: italic;
+            letter-spacing: 0.8px;
         }
         .stButton button {
             background: #fd5c63;
@@ -112,7 +111,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# HEADER (no cursor, no special font)
+# HEADER
 st.markdown("""
 <div class="main-header">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
@@ -123,16 +122,14 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Dreamy, small, no outline subtitle/privacy lines
+# Dreamy cursive, small, no outline subtitle/privacy lines
 st.markdown("""
-    <small>
-        <div class="dreamy-subtitle">
-            Upload an image or describe your post to get smart captions in any language!
-        </div>
-        <div class="dreamy-privacy">
-            No data stored. Fully private. ✨
-        </div>
-    </small>
+    <div class="dreamy-cursive">
+        Upload an image or describe your post to get smart captions in any language!
+    </div>
+    <div class="dreamy-cursive-privacy">
+        No data stored. Fully private. ✨
+    </div>
 """, unsafe_allow_html=True)
 
 # === 🔐 Gemini API Key ===
@@ -174,7 +171,7 @@ language_list = [
 ]
 language_list = sorted(language_list)
 
-# --- PROMPT LOGIC: Improved language & translation handling ---
+# --- PROMPT LOGIC ---
 def build_prompt(desc, n, style, length, emojis, hashtags, language):
     if language.lower() == "english":
         return f"""
