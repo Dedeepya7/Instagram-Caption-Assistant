@@ -7,7 +7,7 @@ import google.generativeai as genai
 from datetime import datetime
 
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
-  st.markdown("""
+st.markdown("""
     <style>
         body {
             background: linear-gradient(120deg, #f5f7fa 0%, #c3cfe2 100%);
