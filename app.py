@@ -9,7 +9,7 @@ from datetime import datetime
 # Page config
 st.set_page_config(page_title="Instagram Caption Assistant", layout="centered")
 
-# ---- CSS: dreamy script for subtitle/privacy, NO cursor tracking ----
+# ---- CSS: dreamy script subtitle/privacy, no outlines, no colored borders, no tracky cursor ----
 st.markdown("""
     <style>
         body, .stApp {
@@ -30,38 +30,40 @@ st.markdown("""
             letter-spacing: 0.7px;
             text-shadow: 0 2px 8px #a445b288, 0 1px 0 #fd5c6388;
         }
-        /* Dreamy script font for subtitle/privacy lines */
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        /* Dreamy script, small, no outline subtitle/privacy lines */
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
         .dreamy-script {
-            font-family: 'Pacifico', cursive;
-            font-size: 2.1rem;
-            color: #fff;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.0rem;
+            font-weight: 400;
             display: block;
+            color: #232323;
             background: none;
             border-radius: 0;
-            margin-bottom: 0.15rem;
+            margin-bottom: 0.07rem;
             margin-top: 1.1rem;
             box-shadow: none;
             border: none;
             outline: none;
-            letter-spacing: 0.8px;
-            filter: brightness(1.09);
-            font-style: normal;
+            filter: drop-shadow(0 2px 10px #fff3) brightness(1.07);
+            opacity: 0.97;
+            letter-spacing: 1.3px;
         }
         .dreamy-script-privacy {
-            font-family: 'Pacifico', cursive;
-            font-size: 1.35rem;
-            color: #fff;
+            font-family: 'Great Vibes', cursive;
+            font-size: 1.5rem;
+            font-weight: 400;
             display: block;
+            color: #232323;
             background: none;
             border-radius: 0;
             margin-bottom: 1.13rem;
             box-shadow: none;
             border: none;
             outline: none;
-            letter-spacing: 0.7px;
-            filter: brightness(1.08);
-            font-style: normal;
+            filter: drop-shadow(0 1px 7px #fff3) brightness(1.07);
+            opacity: 0.96;
+            letter-spacing: 1.2px;
         }
         .stButton button {
             background: #fd5c63;
