@@ -197,7 +197,8 @@ def build_prompt(desc, n, style, length, emojis, hashtags, language):
         return f"""
         Generate {n} unique Instagram captions in English ONLY for the following post:
         "{desc}"
-        Each caption should be approximately the same length and level of detail.
+        Each caption should be approximately the same length and level of detail. 
+        Ensure all captions are similar in length (differ by no more than 1 sentence).
         Captions should be {length.lower()} and in a {style.lower()} style.
         {'Include emojis.' if emojis else 'No emojis.'}
         {'Include hashtags.' if hashtags else 'No hashtags.'}
@@ -208,7 +209,8 @@ def build_prompt(desc, n, style, length, emojis, hashtags, language):
         return f"""
         Generate {n} unique Instagram captions for the following post:
         "{desc}"
-        Each caption should be approximately the same length and level of detail.
+        Each caption should be approximately the same length and level of detail. 
+        Ensure all captions are similar in length (differ by no more than 1 sentence).
         Captions should be {length.lower()} and in a {style.lower()} style.
         {'Include emojis.' if emojis else 'No emojis.'}
         {'Include hashtags.' if hashtags else 'No hashtags.'}
@@ -218,7 +220,6 @@ def build_prompt(desc, n, style, length, emojis, hashtags, language):
         English: [English translation]
         List the captions as a numbered list, with no extra explanations or formatting.
         """
-
 def generate_captions(prompt):
     model = genai.GenerativeModel("gemini-1.5-flash-latest")
     response = model.generate_content(prompt)
