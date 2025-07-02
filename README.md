@@ -1,4 +1,7 @@
-# Instagram Caption Assistant 
+# Instagram Caption Assistant
+
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![License](https://img.shields.io/github/license/Dedeepya7/Instagram-Caption-Assistant)
 
 Generate creative, multilingual Instagram captions from images or descriptions using BLIP and LLMs via Streamlit.
 
@@ -20,7 +23,7 @@ Generate creative, multilingual Instagram captions from images or descriptions u
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Requirements](#requirements)
-- [Contributing](#contributing-)
+- [Contributing](#contributing)
 - [Authors](#authors)
 - [License](#license)
 
@@ -32,7 +35,7 @@ Generate creative, multilingual Instagram captions from images or descriptions u
 
 ```bash
 git clone https://github.com/Dedeepya7/Instagram-Caption-Assistant
-cd instagram-Caption-Assistant
+cd Instagram-Caption-Assistant
 ```
 
 ### 2. Create a Virtual Environment
@@ -76,7 +79,7 @@ Then:
 ## 🗂️ Project Structure
 
 ```
-instagram-caption-generator/
+instagram-Caption-Assistant/
 ├── app.py                 # Main Streamlit application
 ├── model_utils.py         # BLIP model loader & image describer
 ├── caption_generator.py   # LLM integration & prompt chain code
@@ -90,8 +93,8 @@ instagram-caption-generator/
 
 ## 📦 Requirements
 
-- **Python** ≥ 3.10  
-- `torch`, `transformers`, `streamlit`, `Pillow`  
+- **Python** 3.10, 3.11, 3.12 
+- `torch`, `transformers`, `streamlit`, `Pillow`
 - `langchain`, `langchain-community`, `google-generativeai`  
 
 ### API Keys Needed
@@ -104,6 +107,12 @@ instagram-caption-generator/
 ```toml
 GEMINI_API_KEY = "ya29_xxx"
 ```
+
+---
+
+## ⚠️ Security
+
+**Never commit your `.streamlit/secrets.toml` or API keys to public repositories!**
 
 ---
 
@@ -134,8 +143,6 @@ Contributions are welcome! Follow these steps:
 
 - **Dedeepya Ramidi** – Initial work – https://github.com/Dedeepya7
 
-
-
 ---
 
 ## 📄 License
@@ -143,4 +150,3 @@ Contributions are welcome! Follow these steps:
 This project is licensed under the **MIT License**. See the `LICENSE` file for more details.
 
 ---
-
