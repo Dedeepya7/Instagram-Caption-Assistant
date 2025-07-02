@@ -31,7 +31,7 @@ Generate creative, multilingual Instagram captions from images or descriptions u
 ### 1. Clone the Repo
 
 ```bash
-git clone https://github.com/<your-username>/instagram-caption-generator.git
+git clone https://github.com/Dedeepya7/Instagram-Caption-Assistant
 cd instagram-caption-generator
 ```
 
@@ -39,8 +39,10 @@ cd instagram-caption-generator
 
 ```bash
 python -m venv venv
+
 # For Linux/macOS
 source venv/bin/activate
+
 # For Windows
 venv\Scripts\activate
 ```
@@ -81,7 +83,7 @@ instagram-caption-generator/
 ├── requirements.txt       # Python dependencies
 ├── README.md              # This file
 └── .streamlit/
-    └── secrets.toml       # API keys (e.g., HUGGINGFACEHUB_API_TOKEN)
+    └── secrets.toml       # API keys (e.g., GEMINI_API_KEY)
 ```
 
 ---
@@ -94,8 +96,7 @@ instagram-caption-generator/
 
 ### API Keys Needed
 
-- `HUGGINGFACEHUB_API_TOKEN` (for models like Falcon or Llama)
-- `GEMINI_API_KEY` (optional, for Gemini Pro)
+- `GEMINI_API_KEY` (for Gemini Pro)
 
 ### Add them to `.streamlit/secrets.toml`
 
@@ -131,9 +132,8 @@ Contributions are welcome! Follow these steps:
 
 ## 👩‍💻 Authors
 
-- **Your Name** – Initial work – [your GitHub](https://github.com/your-username)
+- **Dedeepya Ramidi** – Initial work – https://github.com/Dedeepya7
 
-Thanks to all contributors!
 
 ---
 
