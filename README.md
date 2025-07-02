@@ -1,4 +1,4 @@
-# Instagram Caption Generator 📸
+# Instagram Caption Assistant 
 
 Generate creative, multilingual Instagram captions from images or descriptions using BLIP and LLMs via Streamlit.
 
