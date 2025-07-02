@@ -32,7 +32,7 @@ Generate creative, multilingual Instagram captions from images or descriptions u
 
 ```bash
 git clone https://github.com/Dedeepya7/Instagram-Caption-Assistant
-cd instagram-caption-generator
+cd instagram-Caption-Assistant
 ```
 
 ### 2. Create a Virtual Environment
