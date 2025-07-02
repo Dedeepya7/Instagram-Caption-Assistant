@@ -77,15 +77,26 @@ st.markdown("""
         .stAlert {
             border-radius: 8px;
         }
+        # .caption-block {
+        #     font-size: 1.23rem !important;
+        #     color: #232323 !important;
+        #     font-weight: 500 !important;
+        #     background: rgba(255,255,255,0.97);
+        #     border-radius: 14px;
+        #     padding: 1.2rem 1.3rem;
+        #     margin: 1.3rem 0;
+        #     box-shadow: 0 2px 12px #0001;
+        # }
         .caption-block {
-            font-size: 1.23rem !important;
-            color: #232323 !important;
-            font-weight: 500 !important;
-            background: rgba(255,255,255,0.97);
-            border-radius: 14px;
-            padding: 1.2rem 1.3rem;
-            margin: 1.3rem 0;
-            box-shadow: 0 2px 12px #0001;
+             font-size: 1.23rem !important;
+             color: #232323 !important;
+             font-weight: 500 !important;
+             background: #fff !important;
+             border-radius: 14px;
+             padding: 1.2rem 1.3rem;
+             margin: 1.3rem 0;
+             box-shadow: 0 2px 12px #0001;
+             border: 1.5px solid #e0e0e0;    
         }
         .stMarkdown ol, .stMarkdown ul {
             color: #363636 !important;
@@ -259,10 +270,19 @@ if (images or text_input.strip()) and st.button("Generate Captions"):
             captions = generate_captions(prompt)
             st.success("🎉 Captions generated!")
             #st.markdown(f'<div class="caption-block">{captions}</div>', unsafe_allow_html=True)
-            # for line in captions.split('\n'):
-            #     if line.strip():  # Skip empty lines
-            #        st.markdown(f'<div class="caption-block">{line}</div>', unsafe_allow_html=True)
-            st.write(captions)
+            caption_lines = [line.strip() for line in captions.split('\n') if line.strip()]
+
+            block_html = '<div class="caption-block"><ol style="margin:0;padding-left:1.3em;">'
+            for line in caption_lines:
+               # Remove "1. ", "2. ", etc. if present at the start
+               if len(line) > 2 and line[1:3] == '. ' and line[0].isdigit():
+                  text = line[3:]
+               else:
+                  text = line
+               block_html += f'<li>{text}</li>'
+            block_html += '</ol></div>'
+
+            st.markdown(block_html, unsafe_allow_html=True)
             st.download_button("📥 Download Captions", captions, file_name=f"captions_{datetime.now().strftime('%Y%m%d_%H%M')}.txt")
         except Exception as e:
             st.error(f"❌ Error: {e}")
