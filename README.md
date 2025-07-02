@@ -101,7 +101,6 @@ instagram-caption-generator/
 ### Add them to `.streamlit/secrets.toml`
 
 ```toml
-HUGGINGFACEHUB_API_TOKEN = "hf_xxx"
 GEMINI_API_KEY = "ya29_xxx"
 ```
 
@@ -133,6 +132,7 @@ Contributions are welcome! Follow these steps:
 ## 👩‍💻 Authors
 
 - **Dedeepya Ramidi** – Initial work – https://github.com/Dedeepya7
+
 
 
 ---
