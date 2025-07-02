@@ -1,5 +1,3 @@
 # Instagram-Caption-Assistant
-This instagram caption assistant is made for generating multiple captions at a time in your preferred language, it also provides the caption translation for the other langugaes to english, You can upload any photo that you wanna post, or even multiple photos at once with mixed captions, and u get a preview of it, then select the number of captions that you want to generate(<=10), & select if you want emojis & some hastags relatable for that post, also the langugae u wish, then you will get the catchy captions. 
-Even, you can add the post description to get much more adaptable ccaptions.
-Doing this with the help of streamlit cloud.
-And using the Gemini 1.5 flash model.
+This Instagram Caption Assistant helps you generate multiple catchy captions at once in your preferred language, with automatic English translations for non-English captions. You can upload one or more photos (with preview), or simply enter a post description for more personalized results. Choose the number of captions (up to 10), add emojis or relevant hashtags, and select your desired language to get creative, post-ready captions.
+Built with Streamlit Cloud and powered by the Gemini 1.5 Flash model, this app makes caption creation fast, fun, and multilingual!
