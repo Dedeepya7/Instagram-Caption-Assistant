@@ -47,14 +47,14 @@ Ideal for social media creators, marketers, or anyone looking to level up their 
 ```bash
 git clone https://github.com/<your-username>/instagram-caption-generator.git
 cd instagram-caption-generator
-2. Create a virtual environment
+### 2. Create a virtual environment
 bash
 Copy
 Edit
 python -m venv venv
 source venv/bin/activate  # Linux/macOS
 venv\Scripts\activate     # Windows PowerShell
-3. Install dependencies
+### 3. Install dependencies
 bash
 Copy
 Edit
