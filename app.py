@@ -273,15 +273,17 @@ if (images or text_input.strip()) and st.button("Generate Captions"):
             caption_lines = [line.strip() for line in captions.split('\n') if line.strip()]
 
             block_html = '<div class="caption-block"><ol style="margin:0;padding-left:1.3em;">'
-            for line in caption_lines:
-               # Remove "1. ", "2. ", etc. if present at the start
-               if len(line) > 2 and line[1:3] == '. ' and line[0].isdigit():
-                  text = line[3:]
-               else:
-                  text = line
-               block_html += f'<li>{text}</li>'
+            i = 0
+            while i < len(caption_lines):
+                 main_caption = caption_lines[i]
+                 translation = ""
+                 # Check if the next line is an English translation
+                 if i+1 < len(caption_lines) and caption_lines[i+1].strip().lower().startswith("english:"):
+                      translation = caption_lines[i+1]
+                      i += 1  # increment to skip translation on next loop
+                 block_html += f'<li>{main_caption}<br><span style="color:#555;font-size:0.98em;">{translation}</span></li>'
+                 i += 1
             block_html += '</ol></div>'
-
             st.markdown(block_html, unsafe_allow_html=True)
             st.download_button("📥 Download Captions", captions, file_name=f"captions_{datetime.now().strftime('%Y%m%d_%H%M')}.txt")
         except Exception as e:
