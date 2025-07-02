@@ -262,7 +262,7 @@ if (images or text_input.strip()) and st.button("Generate Captions"):
             # for line in captions.split('\n'):
             #     if line.strip():  # Skip empty lines
             #        st.markdown(f'<div class="caption-block">{line}</div>', unsafe_allow_html=True)
-            st.markdown(captions)
+            st.write(captions)
             st.download_button("📥 Download Captions", captions, file_name=f"captions_{datetime.now().strftime('%Y%m%d_%H%M')}.txt")
         except Exception as e:
             st.error(f"❌ Error: {e}")
