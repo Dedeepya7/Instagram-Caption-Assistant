@@ -1,4 +1,5 @@
 import os
+import re
 import torch
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
@@ -276,6 +277,8 @@ if (images or text_input.strip()) and st.button("Generate Captions"):
             i = 0
             while i < len(caption_lines):
                  main_caption = caption_lines[i]
+                 # REMOVE any leading number+dot+space
+                 main_caption = re.sub(r"^\d+\.\s*", "", main_caption)
                  translation = ""
                  # Check if the next line is an English translation
                  if i+1 < len(caption_lines) and caption_lines[i+1].strip().lower().startswith("english:"):
