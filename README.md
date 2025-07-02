@@ -98,6 +98,7 @@ instagram-caption-generator/
 
 - `GEMINI_API_KEY` (for Gemini Pro)
 -  Gemini Studio (https://aistudio.google.com/) – Manage your Gemini API keys and projects.
+-  - [Gemini Studio](https://aistudio.google.com/) – Manage your Gemini API keys and projects.
 
 ### Add them to `.streamlit/secrets.toml`
 
