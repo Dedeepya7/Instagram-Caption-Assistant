@@ -78,16 +78,6 @@ st.markdown("""
         .stAlert {
             border-radius: 8px;
         }
-        # .caption-block {
-        #     font-size: 1.23rem !important;
-        #     color: #232323 !important;
-        #     font-weight: 500 !important;
-        #     background: rgba(255,255,255,0.97);
-        #     border-radius: 14px;
-        #     padding: 1.2rem 1.3rem;
-        #     margin: 1.3rem 0;
-        #     box-shadow: 0 2px 12px #0001;
-        # }
         .caption-block {
              font-size: 1.23rem !important;
              color: #232323 !important;
@@ -135,19 +125,6 @@ st.markdown("""
       <img class="ig-float-img" src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
     </div>
 """, unsafe_allow_html=True)
-
-# # --- Instagram-logo tracking cursor (optional, enabled by default) ---
-# components.html("""
-# <div id="ig-cursor" style="position:fixed;left:0;top:0;width:44px;height:44px;pointer-events:none;z-index:99;transition:transform 0.08s;">
-#   <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" style="width:44px;height:44px;opacity:0.23;">
-# </div>
-# <script>
-# const cursor = document.getElementById('ig-cursor');
-# document.addEventListener('mousemove', (e) => {
-#   cursor.style.transform = `translate(${e.clientX-22}px, ${e.clientY-22}px)`;
-# });
-# </script>
-# """, height=60)
 
 # HEADER
 st.markdown("""
